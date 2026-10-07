@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SebaAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#0F9D8A;--pd:#0B7F70;--bg:#F7FBFA;--t:#1F2937;--g:#22C55E;--y:#F59E0B;--r:#EF4444;--b:#3B82F6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--t);font:400 18px/1.65 'Hind Siliguri',sans-serif}
+main{max-width:520px;margin:auto;padding:0 16px 120px}
+[hidden]{display:none!important}
+header{background:linear-gradient(160deg,#12B39E,#0B7F70);color:#fff;text-align:center;padding:max(28px,env(safe-area-inset-top)) 16px 56px;border-radius:0 0 30px 30px}
+.logo{font-size:40px;font-weight:700;letter-spacing:.5px;line-height:1.2}
+.tag{font-size:18px;opacity:.92;margin-top:4px}
+#s1{margin-top:-32px}
+.card{background:#fff;border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 4px 16px rgba(15,157,138,.10)}
+.card h2{margin:0 0 10px;font-size:20px;line-height:1.4}
+.st{display:flex;align-items:center;gap:10px}
+.st i{font-style:normal;background:var(--p);color:#fff;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:16px;font-weight:700;flex:none}
+button{font:inherit;min-height:52px;border:0;border-radius:16px;padding:10px 16px;cursor:pointer;transition:transform .1s}
+button:active{transform:scale(.97)}
+:focus-visible{outline:3px solid #0F9D8A66;outline-offset:2px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.ub{display:grid;gap:12px}
+.ubtn{display:flex;align-items:center;gap:14px;width:100%;min-height:70px;font-size:20px;font-weight:600;text-align:left}
+.ubtn b{font-size:26px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.3);flex:none}
+.pri{background:var(--p);color:#fff}
+.sec{background:#E6F6F3;color:var(--pd);font-weight:600}.ubtn.sec b{background:#fff}
+.big{width:100%;background:var(--g);color:#fff;font-size:21px;font-weight:700;min-height:58px;box-shadow:0 6px 16px rgba(34,197,94,.35)}
+.big:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:24px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 40%)}
+.bar button{display:block;max-width:488px;margin:auto}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input[type=number],input[type=text]{width:100%;min-height:52px;font:inherit;padding:8px 14px;border:1.5px solid #cbd5e1;border-radius:14px;background:#fff}
+input:focus{border-color:var(--p);outline:3px solid #0F9D8A33}
+.seg button{background:#eef2f2}.seg button.on{background:var(--p);color:#fff;font-weight:700}
+#prev{position:relative;margin-top:14px}#prev img{width:100%;border-radius:14px;max-height:320px;object-fit:contain;background:#eef2f2}
+#rm{position:absolute;top:8px;right:8px;min-height:48px;min-width:48px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.note{font-size:15px;color:#4b5563;margin:12px 0 0;background:#F1F5F9;border-radius:12px;padding:8px 12px}
+.center{text-align:center;padding:70px 0}
+.spin{width:68px;height:68px;margin:0 auto 22px;border:7px solid #d5efea;border-top-color:var(--p);border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+.urgent{background:var(--r);color:#fff;font-weight:700;font-size:21px;text-align:center;border-radius:18px;padding:18px;margin:16px 0 0;box-shadow:0 6px 16px rgba(239,68,68,.35)}
+.info{background:#EFF6FF;border-left:6px solid var(--b)}.ok{background:#F0FDF4;border-left:6px solid var(--g)}.warn{background:#FFFBEB;border-left:6px solid var(--y)}
+.t{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #eef2f2}.t:last-child{border:0}
+.t small{display:block;color:#6b7280;font-size:15px}
+.badge{flex:none;font-size:14px;font-weight:700;border-radius:20px;padding:4px 10px;max-width:42%;text-align:center;line-height:1.35}
+.badge.normal{background:#DCFCE7;color:#15803D}.badge.mild{background:#FEF3C7;color:#B45309}.badge.severe{background:#FEE2E2;color:#B91C1C}
+details{border-bottom:1px solid #eef2f2;padding:8px 0}summary{font-weight:600;cursor:pointer;min-height:44px;display:flex;align-items:center}
+ul{padding-left:22px;margin:0}li{margin:6px 0}
+.q{display:flex;gap:8px;align-items:flex-start;padding:8px 0}.q span{flex:1}.q button{min-height:48px;min-width:48px;background:#eef2f2;padding:4px}
+.disc{font-size:14px;color:#6b7280;text-align:center;margin-top:22px}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--t);color:#fff;padding:12px 20px;border-radius:26px;font-size:16px;z-index:9}
+</style></head><body><header><div class="logo">SebaAI</div><div class="tag">আপনার রিপোর্ট, সহজ বাংলায়</div></header>
+<main>
+
+<section id="s1">
+ <div class="card">
+  <h2 class="st"><i>১</i>রিপোর্টের ছবি দিন</h2>
+  <div class="ub">
+   <button class="ubtn pri" id="cam"><b>📷</b>ছবি তুলুন</button>
+   <button class="ubtn sec" id="gal"><b>🖼️</b>গ্যালারি থেকে নিন</button>
+  </div>
+  <input type="file" id="fc" accept="image/*" capture="environment" hidden>
+  <input type="file" id="fg" accept="image/*" hidden>
+  <div id="prev" hidden><img id="pimg" alt="রিপোর্টের ছবি"><button id="rm" aria-label="মুছে ফেলুন">❌</button></div>
+  <div class="note">🔒 নাম ও ফোন নম্বর ঢেকে ছবি তুলুন</div>
+ </div>
+ <div class="card">
+  <h2 class="st"><i>২</i>আপনার তথ্য</h2>
+  <label for="age">🎂 বয়স</label><input type="number" id="age" inputmode="numeric" min="0" max="120">
+  <label>👤 লিঙ্গ</label>
+  <div class="row seg" id="seg"><button data-v="পুরুষ">পুরুষ</button><button data-v="মহিলা">মহিলা</button><button data-v="অন্যান্য">অন্যান্য</button></div>
+  <label for="prob">💬 সমস্যা কী?</label><input type="text" id="prob" placeholder="যেমন: কোমরে ব্যথা">
+  <label for="hist">💊 চলমান ওষুধ বা আগের রোগ (ঐচ্ছিক)</label><input type="text" id="hist">
+ </div>
+ <div class="bar"><button class="big" id="go" disabled>আগে রিপোর্টের ছবি দিন</button></div>
+</section>
+
+<section id="s2" hidden class="center"><div class="spin"></div><h2 id="lm">রিপোর্ট পড়া হচ্ছে...</h2></section>
+
+<section id="s4" hidden class="center"><div style="font-size:56px">😔</div><h2 id="em"></h2><button class="big" id="retry">আবার চেষ্টা করুন</button></section>
+
+<section id="s3" hidden></section>
+<div id="toast" hidden></div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+let img=null,gender='',lastErr=false;
+const show=id=>{['s1','s2','s3','s4'].forEach(s=>$(s).hidden=s!==id);scrollTo(0,0)};
+const toast=m=>{const t=$('toast');t.textContent=m;t.hidden=false;setTimeout(()=>t.hidden=true,1800)};
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+
+$('cam').onclick=()=>$('fc').click();$('gal').onclick=()=>$('fg').click();
+['fc','fg'].forEach(i=>$(i).onchange=e=>e.target.files[0]&&pick(e.target.files[0]));
+$('rm').onclick=()=>{img=null;$('prev').hidden=true;$('fc').value=$('fg').value='';$('go').disabled=true;$('go').textContent='আগে রিপোর্টের ছবি দিন'};
+$('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;gender=b.dataset.v;[...$('seg').children].forEach(x=>x.classList.toggle('on',x===b))};
+
+async function pick(f){
+ if(f.size>5*1024*1024)return toast('ছবি ৫MB এর বেশি বড়');
+ try{
+  const bm=await createImageBitmap(f);let sc=Math.min(1,1600/Math.max(bm.width,bm.height)),q=.85,d;
+  const c=document.createElement('canvas');
+  for(let i=0;i<5;i++){c.width=bm.width*sc;c.height=bm.height*sc;c.getContext('2d').drawImage(bm,0,0,c.width,c.height);d=c.toDataURL('image/jpeg',q);if(d.length<1.6e6)break;sc*=.8;q-=.08}
+  img=d.split(',')[1];$('pimg').src=d;$('prev').hidden=false;$('go').disabled=false;$('go').textContent='রিপোর্ট বুঝিয়ে দিন';
+ }catch{toast('ছবি খোলা যায়নি')}
+}
+
+const msgs=['রিপোর্ট পড়া হচ্ছে...','মানগুলো মেলানো হচ্ছে...','সহজ করে লেখা হচ্ছে...'];
+$('go').onclick=run;$('retry').onclick=()=>lastErr?run():show('s1');
+
+async function run(){
+ show('s2');let i=0;$('lm').textContent=msgs[0];
+ const iv=setInterval(()=>$('lm').textContent=msgs[i=Math.min(i+1,2)],4000);
+ const ac=new AbortController(),to=setTimeout(()=>ac.abort(),90000);
+ try{
+  const r=await fetch('/api/analyze',{method:'POST',headers:{'content-type':'application/json'},signal:ac.signal,
+   body:JSON.stringify({image:img,age:$('age').value,gender,problem:$('prob').value,history:$('hist').value})});
+  if(!r.ok)throw 0;const d=await r.json();
+  if(d.status==='unclear')return fail('ছবিটা পরিষ্কার নয়, আলোতে আবার তুলুন',false);
+  if(d.status==='not_report')return fail('এটা মেডিকেল রিপোর্ট মনে হচ্ছে না',false);
+  render(d);
+ }catch{fail('ইন্টারনেট বা সার্ভারে সমস্যা হয়েছে। একটু পরে আবার চেষ্টা করুন।',true)}
+ finally{clearInterval(iv);clearTimeout(to)}
+}
+function fail(m,retry){lastErr=retry;$('em').textContent=m;$('retry').textContent=retry?'আবার চেষ্টা করুন':'আবার ছবি দিন';show('s4')}
+
+const BADGE={normal:'🟢 স্বাভাবিক',mild:'🟡 একটু বেশি/কম',severe:'🔴 অনেক বেশি/কম'};
+const DOT={normal:'🟢',mild:'🟡',severe:'🔴'};
+function card(cls,title,body){const c=el('div','card '+cls);c.append(el('h2',null,title));c.append(body);return c}
+function list(a){const u=el('ul');(a||[]).forEach(x=>u.append(el('li',null,x)));return u}
+
+function render(d){
+ const o=$('s3');o.replaceChildren();
+ if(d.urgent)o.append(el('div','urgent','🔴 দ্রুত ডাক্তার দেখান'));
+ o.append(card('info','📋 রিপোর্টটা কীসের',el('div',null,d.summary||'')));
+ const tb=el('div');
+ (d.tests||[]).forEach(t=>{const st=BADGE[t.status]?t.status:'mild';const r=el('div','t');const x=el('div');x.style.flex='1';x.append(el('b',null,t.name||''));x.append(el('div',null,'ফলাফল: '+(t.result||'')));x.append(el('small',null,'স্বাভাবিক: '+(t.normal||'—')));r.append(x,el('span','badge '+st,BADGE[st]));tb.append(r)});
+ o.append(card('','🔬 পরীক্ষার ফল',tb));
+ if((d.terms||[]).length){const tm=el('div');d.terms.forEach(t=>{const de=el('details');de.append(el('summary',null,t.word||''));de.append(el('div',null,t.meaning||''));tm.append(de)});o.append(card('','📖 কঠিন শব্দের মানে',tm))}
+ o.append(card('ok','✅ ভালো দিক',list(d.good)));
+ o.append(card('warn','⚠️ মনোযোগ দেওয়ার মতো দিক',list(d.attention)));
+ const qs=el('div');(d.questions||[]).slice(0,5).forEach((q,i)=>{const r=el('div','q');r.append(el('span',null,(i+1)+'. '+q));
+  const b=el('button',null,'📋');b.setAttribute('aria-label','কপি');b.onclick=()=>copy(q);r.append(b);qs.append(r)});
+ o.append(card('','❓ ডাক্তারকে জিজ্ঞেস করার প্রশ্ন',qs));
+ const txt=plain(d);
+ const row=el('div','row');
+ const sh=el('button','sec','📤 শেয়ার করুন');sh.onclick=()=>navigator.share?navigator.share({text:txt}).catch(()=>{}):open('https://wa.me/?text='+encodeURIComponent(txt));
+ const cp=el('button','sec','📋 সব কপি করুন');cp.onclick=()=>copy(txt);
+ row.append(sh,cp);o.append(row);
+ const nw=el('button','big','🔄 নতুন রিপোর্ট');nw.style.marginTop='12px';nw.onclick=()=>{$('rm').click();show('s1')};o.append(nw);
+ o.append(el('p','disc','এটা শুধু বোঝার সহায়তা, ডাক্তারের বিকল্প নয়। সিদ্ধান্তের আগে ডাক্তারের সাথে কথা বলুন।'));
+ show('s3');
+}
+function plain(d){
+ return ['SebaAI - রিপোর্ট ব্যাখ্যা',d.urgent?'🔴 দ্রুত ডাক্তার দেখান':'',d.summary,'',
+  ...(d.tests||[]).map(t=>`${DOT[t.status]||'🟡'} ${t.name}: ${t.result} (স্বাভাবিক: ${t.normal})`),'',
+  'ভালো দিক:',...(d.good||[]).map(x=>'- '+x),'','মনোযোগের দিক:',...(d.attention||[]).map(x=>'- '+x),'',
+  'ডাক্তারকে প্রশ্ন:',...(d.questions||[]).map((q,i)=>`${i+1}. ${q}`),'',
+  'এটা শুধু বোঝার সহায়তা, ডাক্তারের বিকল্প নয়।'].join('\n');
+}
+async function copy(t){try{await navigator.clipboard.writeText(t);toast('কপি হয়েছে ✓')}catch{toast('কপি করা যায়নি')}}
+</script></body></html>
